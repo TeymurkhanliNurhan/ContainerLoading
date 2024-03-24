@@ -1,3 +1,5 @@
+using System.Security.Cryptography;
+
 namespace ContainerProject;
 public class Container
 {
@@ -90,9 +92,10 @@ public class Container
         this.maxPayload = maxPayload;
     }
 
-    public void emptyingCargo()
+    public void emptyingCargo(double emptyweight)
     {
-        mass = 0;
+        if(getMass()-emptyweight<0) Console.WriteLine("Not enough amount of cargo");
+        mass -= emptyweight;
     }
 
     public class OverfillException : Exception

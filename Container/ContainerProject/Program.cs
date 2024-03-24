@@ -104,7 +104,9 @@ class Program
                     }
                     else
                     {
-                        FindContainerBySerialNumber(sernum1).emptyingCargo();
+                        Console.WriteLine("Enter the mass of cargo you want to empty");
+                        double emptyCargo = Convert.ToDouble(Console.ReadLine());
+                        FindContainerBySerialNumber(sernum1).emptyingCargo(emptyCargo);
                         break;
                     }
                     
