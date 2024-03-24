@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <Compile Remove="LiquidCon.cs" />
+      <Compile Remove="IHazartNotifier.cs" />
     </ItemGroup>
 
 </Project>
