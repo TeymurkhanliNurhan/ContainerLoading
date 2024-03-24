@@ -20,6 +20,7 @@ public class GasContainer : Container, IHazardNotifier
         return info;
     }
     
+    
     public void NotifyHazard(string containerNumber)
     {
         Console.WriteLine($"Hazardous situation detected in container {containerNumber}. Immediate action required.");
@@ -38,4 +39,6 @@ public class GasContainer : Container, IHazardNotifier
     {
         return "G";
     }
+
+    
 }

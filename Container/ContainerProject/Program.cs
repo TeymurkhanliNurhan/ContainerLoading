@@ -5,14 +5,16 @@ using ContainerProject;
  
 class Program
 {
+    private static List<RefrigeratedContainer> RefrigeratedContainers = new List<RefrigeratedContainer>();
     private static List<GasContainer> GasContainers = new List<GasContainer>();
     private static List<LiquidContainer> LiquidContainers = new List<LiquidContainer>();
     private static List<Container> Containers = new List<Container>();
 
     public static List<LiquidContainer> GetLiquidContainers() {return LiquidContainers;}
-
+    public static List<RefrigeratedContainer> GetRefrigeratedContainers() { return RefrigeratedContainers;}
     public static List<GasContainer> GetGasContainers() { return GasContainers;}
     public static List<Container> GetContainer() { return Containers;}
+    
     
     public static void AddLiquidContainer(LiquidContainer liquidContainer)
     {
@@ -23,6 +25,11 @@ class Program
     {
         GasContainers.Add(gasContainer);
         Containers.Add(gasContainer); // Also add to the general list of containers
+    }
+    public static void AddrRefrigeratedContainer(RefrigeratedContainer refrigeratedContainer)
+    {
+        RefrigeratedContainers.Add(refrigeratedContainer);
+        Containers.Add(refrigeratedContainer); // Also add to the general list of containers
     }
     
     
@@ -50,7 +57,18 @@ class Program
             return null; // Return null if the container is not found
         }
         
-
+        static Container FindContainerBySerialNumberRef(string serialNumber)
+        {
+            foreach (RefrigeratedContainer refrigeratedContainer in RefrigeratedContainers)
+            {
+                if (refrigeratedContainer.getSerNum() == serialNumber)
+                {
+                    return refrigeratedContainer;
+                }
+            }
+            return null; // Return null if the container is not found
+        }
+        
         Boolean exit = false;
 
         while (!false)
@@ -102,13 +120,20 @@ class Program
                     }
                     else if (ConType == 3)
                     {
+                        Console.WriteLine("Enter the type of product");
+                        Console.WriteLine("Types: Bananas/ Chocolate/ Fish/ Meat/ Ice cream/ Frozen pizza/ Cheese/ Sausage/ Butter/ Eggs ");
+                        string type = Convert.ToString(Console.ReadLine());
+                        RefrigeratedContainer refrigeratedContainer = new RefrigeratedContainer(height, tareWeight, depth, maxPayLoad, type);
+                        AddrRefrigeratedContainer(refrigeratedContainer);
                         break;
                     }
                     else
                     {
+                        Console.WriteLine("Wrong input");
                         break;
                     }
-            break;
+
+                    break;
                 
                     case 2:
                     Console.WriteLine("Enter the serial number of container"); 
@@ -143,13 +168,26 @@ class Program
                         break;
                     }
                     else
-                    { 
+                    {
                         Console.WriteLine("Enter mass of load: ");
                         double mass = Convert.ToDouble(Console.ReadLine());
                         if (mass<=0)
                         {
                             Console.WriteLine("Wrong input");
                             break;
+                        }
+
+                        if (FindContainerBySerialNumber(sernum) is IProductTypeContainer productTypeContainer)
+                        {
+                            Console.WriteLine("Enter the type of product you want to upload:");
+                            string productType = Console.ReadLine();
+        
+                            if (!productTypeContainer.CanLoadProductType(productType))
+                            {
+                                Console.WriteLine("This container can only store " + productTypeContainer.TypeName + ".");
+                                break;
+                            }
+                            FindContainerBySerialNumber(sernum).loadingCargo(mass);
                         }
                         else FindContainerBySerialNumber(sernum).loadingCargo(mass);
                         break;
