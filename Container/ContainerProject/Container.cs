@@ -92,7 +92,7 @@ public class Container
         this.maxPayload = maxPayload;
     }
 
-    public void emptyingCargo(double emptyweight)
+    public virtual void emptyingCargo(double emptyweight)
     {
         if(getMass()-emptyweight<0) Console.WriteLine("Not enough amount of cargo");
         mass -= emptyweight;
@@ -106,7 +106,7 @@ public class Container
     }
     public virtual void loadingCargo(double weight)
     {
-        if (weight + mass <= maxPayload)
+        if (weight  <= maxPayload)
         {
          mass += weight; 
         }

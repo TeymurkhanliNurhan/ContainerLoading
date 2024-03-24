@@ -5,20 +5,27 @@ using ContainerProject;
  
 class Program
 {
+    private static List<GasContainer> GasContainers = new List<GasContainer>();
     private static List<LiquidContainer> LiquidContainers = new List<LiquidContainer>();
     private static List<Container> Containers = new List<Container>();
 
     public static List<LiquidContainer> GetLiquidContainers() {return LiquidContainers;}
 
-    public static List<Container> GetContainer()
-    {
-        return Containers;}
+    public static List<GasContainer> GetGasContainers() { return GasContainers;}
+    public static List<Container> GetContainer() { return Containers;}
     
     public static void AddLiquidContainer(LiquidContainer liquidContainer)
     {
         LiquidContainers.Add(liquidContainer);
         Containers.Add(liquidContainer); // Also add to the general list of containers
     }
+    public static void AddGasContainer(GasContainer gasContainer)
+    {
+        GasContainers.Add(gasContainer);
+        Containers.Add(gasContainer); // Also add to the general list of containers
+    }
+    
+    
     public interface IHazardNotifier
     {
         void NotifyHazard(string containerNumber);
@@ -31,9 +38,9 @@ class Program
 
        
 
-        static LiquidContainer FindContainerBySerialNumber(string serialNumber)
+        static Container FindContainerBySerialNumber(string serialNumber)
         {
-            foreach (LiquidContainer container in LiquidContainers)
+            foreach (Container container in Containers)
             {
                 if (container.getSerNum() == serialNumber)
                 {
@@ -48,11 +55,11 @@ class Program
 
         while (!false)
         {
-            Console.WriteLine("0.Exit ");
+            Console.WriteLine("\n 0.Exit ");
             Console.WriteLine("1.Add a container ");
             Console.WriteLine("2.Empty a container ");
             Console.WriteLine("3.Load container ");
-            Console.WriteLine("4.Info about a container");
+            Console.WriteLine("4.Info about a container\n");
             int input = Convert.ToInt32(Console.ReadLine());
             switch (input)
             {
@@ -82,8 +89,17 @@ class Program
 
                         LiquidContainer liquidContainer = new LiquidContainer(height, tareWeight, depth, maxPayLoad,cargo);
                         AddLiquidContainer(liquidContainer);
+                        break;
                     }
-                    else if (ConType == 2) {break;}
+                    
+                    else if (ConType == 2)
+                    {
+                        Console.WriteLine("Enter the pressure");
+                        double pressure = Convert.ToDouble(Console.ReadLine());
+                        GasContainer gasContainer = new GasContainer(height, tareWeight, depth, maxPayLoad, pressure);
+                        AddGasContainer(gasContainer);
+                        break;
+                    }
                     else if (ConType == 3)
                     {
                         break;
@@ -106,7 +122,11 @@ class Program
                     {
                         Console.WriteLine("Enter the mass of cargo you want to empty");
                         double emptyCargo = Convert.ToDouble(Console.ReadLine());
-                        FindContainerBySerialNumber(sernum1).emptyingCargo(emptyCargo);
+                        if (emptyCargo<=0)
+                        {
+                            Console.WriteLine("Wrong input");
+                        }
+                        else FindContainerBySerialNumber(sernum1).emptyingCargo(emptyCargo);
                         break;
                     }
                     
@@ -115,8 +135,7 @@ class Program
                     case 3:
                     Console.WriteLine("Enter the serial number of container");
                     string sernum =Console.ReadLine();
-                    Console.WriteLine("Enter mass of load: ");
-                    double mass = Convert.ToDouble(Console.ReadLine());
+                   
 
                     if (FindContainerBySerialNumber(sernum) == null)
                     {
@@ -124,24 +143,33 @@ class Program
                         break;
                     }
                     else
-                    {
-                        FindContainerBySerialNumber(sernum).loadingCargo(mass);
+                    { 
+                        Console.WriteLine("Enter mass of load: ");
+                        double mass = Convert.ToDouble(Console.ReadLine());
+                        if (mass<=0)
+                        {
+                            Console.WriteLine("Wrong input");
+                            break;
+                        }
+                        else FindContainerBySerialNumber(sernum).loadingCargo(mass);
                         break;
                     }
 
                     case 4:
                     Console.WriteLine("Do you want to get info about all containers (1) or special one(2)");
                         int concase4=Convert.ToInt32(Console.ReadLine());
-                        if (concase4==1)
+                        if (concase4 == 1)
                         {
                             foreach (Container container in Containers)
                             {
                                 Console.WriteLine(
-                                container.GetContainerInfo());
-                                
+                                    container.GetContainerInfo());
+
                             }
+
                             break;
                         }
+                        
                         else if (concase4 == 2)
                         {
                             Console.WriteLine("Write the serial number of container");

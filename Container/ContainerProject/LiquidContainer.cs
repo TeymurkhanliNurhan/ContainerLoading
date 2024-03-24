@@ -4,12 +4,13 @@ public class LiquidContainer : Container
 {
     private bool isHazardous;
     private string cargo;
-    public LiquidContainer(double height,double tareWeight,double depth,double maxPayload,bool isHazardous) :
-        base(height, tareWeight, depth,maxPayload)
+
+    public LiquidContainer(double height, double tareWeight, double depth, double maxPayload, bool isHazardous) :
+        base(height, tareWeight, depth, maxPayload)
     {
         this.isHazardous = isHazardous;
     }
-    
+
     public override string GetContainerInfo()
     {
         string info = base.GetContainerInfo(); // Call base class method to get common info
@@ -30,7 +31,7 @@ public class LiquidContainer : Container
     public override void loadingCargo(double weight)
     {
         double allowedCapacity = isHazardous ? getMaxPayload() * 0.5 : getMaxPayload() * 0.9;
-        if (getMass() + weight+getTareWeight() > allowedCapacity)
+        if (getMass() + weight> allowedCapacity)
         {
             NotifyHazard(getSerNum());
            
