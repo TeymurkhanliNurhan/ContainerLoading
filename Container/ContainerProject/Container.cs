@@ -23,11 +23,40 @@ public class Container
 
     }
 
-    protected virtual string GetType()
-    {
-        return "default"; // Default type prefix for Container
-    }
+  
+     public virtual void emptyingCargo(double emptyweight)
+        {
+            if(getMass()-emptyweight<0) Console.WriteLine("Not enough amount of cargo");
+            mass -= emptyweight;
+        }
     
+        public class OverfillException : Exception
+        {
+            public OverfillException(string message) : base(message)
+            {
+            }
+        }
+        public virtual void loadingCargo(double weight)
+        {
+            if (weight  <= maxPayload)
+            {
+             mass += weight; 
+            }
+            
+            else   throw new OverfillException("No place");
+        }
+        
+        public virtual string GetContainerInfo()
+        {
+            string info = "\n"; 
+            info += $"Serial Number: {getSerNum()}\n";
+            info += $"Height: {getHeight()} cm\n";
+            info += $"Tare Weight: {getTareWeight()} kg\n";
+            info += $"Depth: {getDepth()} cm\n";
+            info += $"Maximum Payload: {getMaxPayload()} kg\n";
+            info += $"Current Cargo Mass: {getMass()} kg\n";
+            return info;
+        }
     
     private string GenerateSerialNumber()
     {
@@ -37,6 +66,8 @@ public class Container
         return serialNumber;
     }
 
+    
+    //Getters and setters
     public double getMass()
     {
         return this.mass;
@@ -59,7 +90,10 @@ public class Container
     {
         return this.tareWeight;
     }
-
+  protected virtual string GetType()
+    {
+        return "default"; // Default type prefix for Container
+    }
     public void setTareWeight(double tare_weight)
     {
         this.tareWeight = tare_weight;
@@ -94,39 +128,7 @@ public class Container
         this.maxPayload = maxPayload;
     }
 
-    public virtual void emptyingCargo(double emptyweight)
-    {
-        if(getMass()-emptyweight<0) Console.WriteLine("Not enough amount of cargo");
-        mass -= emptyweight;
-    }
-
-    public class OverfillException : Exception
-    {
-        public OverfillException(string message) : base(message)
-        {
-        }
-    }
-    public virtual void loadingCargo(double weight)
-    {
-        if (weight  <= maxPayload)
-        {
-         mass += weight; 
-        }
-        
-        else   throw new OverfillException("No place");
-    }
-    
-    public virtual string GetContainerInfo()
-    {
-        string info = "\n"; 
-        info += $"Serial Number: {getSerNum()}\n";
-        info += $"Height: {getHeight()} units\n";
-        info += $"Tare Weight: {getTareWeight()} units\n";
-        info += $"Depth: {getDepth()} units\n";
-        info += $"Maximum Payload: {getMaxPayload()} units\n";
-        info += $"Current Cargo Mass: {getMass()} units\n";
-        return info;
-    }
+   
     
     
 }
