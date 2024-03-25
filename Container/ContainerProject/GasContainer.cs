@@ -39,6 +39,4 @@ public class GasContainer : Container, IHazardNotifier
     {
         return "G";
     }
-
-    
 }

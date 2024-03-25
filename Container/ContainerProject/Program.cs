@@ -104,7 +104,8 @@ class Program {
 
         while (!false)
         {
-            Console.WriteLine("\n 0.Exit ");
+            Console.WriteLine("\n0.Exit ");
+            
             Console.WriteLine("1.Add a container ");
             Console.WriteLine("2.Empty a container ");
             Console.WriteLine("3.Load container ");
