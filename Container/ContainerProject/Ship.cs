@@ -58,14 +58,10 @@ public class Ship(double maxSpeed, int conNumber, double maxWeight)
     }
     //Getters and Setters
     public double MaxSpeed { get; set; }
-
     public int ConNumber { get; set; }
-
-    public double MaxWeight { get; set; }
+    public double MaxWeight { get; set; } 
     public string Sernum { get; set; }
-
     public double CurrentWeight { get; set; }
-
     public List<Container> GetContainer()
     {
         return containers;

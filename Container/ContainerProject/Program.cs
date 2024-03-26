@@ -1,9 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using System.Runtime.InteropServices;
-using System.Threading.Channels;
-using ContainerProject;
- 
+﻿using ContainerProject;
 class Program {
     //Lists and getters
     private static List<Ship> Ships = new List<Ship>();
@@ -16,13 +11,8 @@ class Program {
     public static List<RefrigeratedContainer> GetRefrigeratedContainers() { return RefrigeratedContainers;}
     public static List<GasContainer> GetGasContainers() { return GasContainers;}
     public static List<Container> GetContainer() { return Containers;}
-    //Adders to Lists of Containers
-
     static void Main(string[] args)
     {
-        // Inside your Program class
-
-
         static Ship FindShipBySerialNumber(string sernum)
         {
             foreach (Ship ship in Ships)
@@ -32,10 +22,8 @@ class Program {
                     return ship;
                 }
             }
-
             return null;
         }
-        
         static Container FindContainerBySerialNumber(string serialNumber)
         {
             foreach (Container container in Containers)
@@ -47,7 +35,6 @@ class Program {
             }
             return null; // Return null if the container is not found
         }
-        
         static Container FindContainerBySerialNumberRef(string serialNumber)
         {
             foreach (RefrigeratedContainer refrigeratedContainer in RefrigeratedContainers)
@@ -59,13 +46,10 @@ class Program {
             }
             return null; // Return null if the container is not found
         }
-        
         Boolean exit = false;
-
         while (!false)
         {
             Console.WriteLine("\n0.Exit ");
-            
             Console.WriteLine("1.Add a container ");
             Console.WriteLine("2.Empty a container ");
             Console.WriteLine("3.Load container ");
@@ -98,8 +82,6 @@ class Program {
                     var tareWeight = Convert.ToDouble(Console.ReadLine());
                     Console.WriteLine("Enter maximum payload: ");
                     var maxPayLoad = Convert.ToDouble(Console.ReadLine());
-
-
                     if (ConType == 1)
                     {
                         Console.WriteLine("Enter the type of container: hazardous(true)/ ordinary(false): ");
@@ -108,7 +90,6 @@ class Program {
                         AddLiquidContainer(liquidContainer);
                         break;
                     }
-
                     else if (ConType == 2)
                     {
                         Console.WriteLine("Enter the pressure");

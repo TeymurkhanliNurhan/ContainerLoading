@@ -14,8 +14,6 @@ public class GasContainer : Container, IHazardNotifier
         info += $"Type: Gas Container\n";
         info += $"Pressure: {pressure} atm\n";
         info += $"\n";
-
-        // Add any other specific information for LiquidContainer
         return info;
     }
     public void NotifyHazard(string containerNumber)

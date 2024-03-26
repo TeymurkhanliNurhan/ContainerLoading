@@ -6,7 +6,6 @@ public class RefrigeratedContainer : Container, IProductTypeContainer
     public RefrigeratedContainer(double height, double tareWeight, double depth, double maxPayload,string typeProduct) :
         base(height, tareWeight, depth, maxPayload)
     {
-        
         this.TypeName = typeProduct;
         switch (this.TypeName)
         {
@@ -33,8 +32,6 @@ public class RefrigeratedContainer : Container, IProductTypeContainer
             default: Console.WriteLine("Not a correct type");
                 break;
         }
-
-      
     }
     public bool CanLoadProductType(string productType)
     {

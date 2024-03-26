@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 namespace ContainerProject;
 public class Container
 {
@@ -9,7 +8,6 @@ public class Container
     private string sernum;
     private double maxPayload;
     private static int contNum = 1;
-
     public Container(double height, double tareWeight, double depth, double maxPayload)
     {
         this.height = height;
