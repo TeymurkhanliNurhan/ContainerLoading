@@ -5,59 +5,19 @@ using System.Threading.Channels;
 using ContainerProject;
  
 class Program {
+    //Lists and getters
     private static List<Ship> Ships = new List<Ship>();
     private static List<RefrigeratedContainer> RefrigeratedContainers = new List<RefrigeratedContainer>();
     private static List<GasContainer> GasContainers = new List<GasContainer>();
     private static List<LiquidContainer> LiquidContainers = new List<LiquidContainer>();
     private static List<Container> Containers = new List<Container>();
-    
     public static List<Ship> GetShips() { return Ships;}
-    public static List<LiquidContainer> GetLiquidContainers() {return LiquidContainers;}
+    public static List<LiquidContainer> GetLiquidContainers() {return LiquidContainers;} 
     public static List<RefrigeratedContainer> GetRefrigeratedContainers() { return RefrigeratedContainers;}
     public static List<GasContainer> GetGasContainers() { return GasContainers;}
     public static List<Container> GetContainer() { return Containers;}
-    
-    
-    public static void AddLiquidContainer(LiquidContainer liquidContainer)
-    {
-        LiquidContainers.Add(liquidContainer);
-        Containers.Add(liquidContainer); // Also add to the general list of containers
-    }
-    public static void AddGasContainer(GasContainer gasContainer)
-    {
-        GasContainers.Add(gasContainer);
-        Containers.Add(gasContainer); // Also add to the general list of containers
-    }
-    public static void AddrRefrigeratedContainer(RefrigeratedContainer refrigeratedContainer)
-    {
-        RefrigeratedContainers.Add(refrigeratedContainer);
-        Containers.Add(refrigeratedContainer); // Also add to the general list of containers
-    }
-    
-    
-    public interface IHazardNotifier
-    {
-        void NotifyHazard(string containerNumber);
-    }
-    static Ship FindShipByContainerSerialNumber(string containerSerialNumber)
-    {
-        // Iterate through each ship in the Ships list
-        foreach (Ship ship in Ships)
-        {
-            // Check if the current ship contains the container with the given serial number
-            if (ship.getContainer().Any(c => c.getSerNum() == containerSerialNumber))
-            {
-                // If found, return the ship
-                return ship;
-            }
-        }
+    //Adders to Lists of Containers
 
-        // If no ship is found with the container, return null
-        return null;
-    }
-
-    
-    
     static void Main(string[] args)
     {
         // Inside your Program class
@@ -67,7 +27,7 @@ class Program {
         {
             foreach (Ship ship in Ships)
             {
-                if (ship.GetSernum()==sernum)
+                if (ship.Sernum==sernum)
                 {
                     return ship;
                 }
@@ -80,7 +40,7 @@ class Program {
         {
             foreach (Container container in Containers)
             {
-                if (container.getSerNum() == serialNumber)
+                if (container.SerNum == serialNumber)
                 {
                     return container;
                 }
@@ -92,7 +52,7 @@ class Program {
         {
             foreach (RefrigeratedContainer refrigeratedContainer in RefrigeratedContainers)
             {
-                if (refrigeratedContainer.getSerNum() == serialNumber)
+                if (refrigeratedContainer.SerNum == serialNumber)
                 {
                     return refrigeratedContainer;
                 }
@@ -116,7 +76,8 @@ class Program {
             Console.WriteLine("8.Load a list of containers onto a ship");
             Console.WriteLine("9.Remove a container from the ship");
             Console.WriteLine("10.Replacing container with another ");
-            Console.WriteLine("11.Transferring container to other ship \n");
+            Console.WriteLine("11.Transferring container to other ship ");
+            Console.WriteLine("12.Get number of containers in each type \n");
             int input = Convert.ToInt32(Console.ReadLine());
             switch (input)
             {
@@ -128,24 +89,22 @@ class Program {
                     Console.WriteLine("1.Liquid ");
                     Console.WriteLine("2.Gas ");
                     Console.WriteLine("3.Refrigerated ");
-                    int ConType = Convert.ToInt32(Console.ReadLine());
+                    var ConType = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine("Enter height: ");
-                    double height = Convert.ToDouble(Console.ReadLine());
+                    var height = Convert.ToDouble(Console.ReadLine());
                     Console.WriteLine("Enter depth: ");
-                    double depth = Convert.ToDouble(Console.ReadLine());
+                    var depth = Convert.ToDouble(Console.ReadLine());
                     Console.WriteLine("Enter tare weight: ");
-                    double tareWeight = Convert.ToDouble(Console.ReadLine());
+                    var tareWeight = Convert.ToDouble(Console.ReadLine());
                     Console.WriteLine("Enter maximum payload: ");
-                    double maxPayLoad = Convert.ToDouble(Console.ReadLine());
+                    var maxPayLoad = Convert.ToDouble(Console.ReadLine());
 
 
                     if (ConType == 1)
                     {
                         Console.WriteLine("Enter the type of container: hazardous(true)/ ordinary(false): ");
-                        bool cargo = Convert.ToBoolean(Console.ReadLine());
-
-                        LiquidContainer liquidContainer =
-                            new LiquidContainer(height, tareWeight, depth, maxPayLoad, cargo);
+                        var cargo = Convert.ToBoolean(Console.ReadLine());
+                        var liquidContainer = new LiquidContainer(height, tareWeight, depth, maxPayLoad, cargo);
                         AddLiquidContainer(liquidContainer);
                         break;
                     }
@@ -174,9 +133,7 @@ class Program {
                         Console.WriteLine("Wrong input");
                         break;
                     }
-
                     break;
-
                 case 2:
                     Console.WriteLine("Enter the serial number of container");
                     string sernum1 = Console.ReadLine();
@@ -193,18 +150,13 @@ class Program {
                         {
                             Console.WriteLine("Wrong input");
                         }
-                        else FindContainerBySerialNumber(sernum1).emptyingCargo(emptyCargo);
-
+                        else FindContainerBySerialNumber(sernum1).EmptyingCargo(emptyCargo);
                         break;
                     }
-
                     break;
-
                 case 3:
                     Console.WriteLine("Enter the serial number of container");
                     string sernum = Console.ReadLine();
-
-
                     if (FindContainerBySerialNumber(sernum) == null)
                     {
                         Console.WriteLine("Not such a container ");
@@ -219,7 +171,6 @@ class Program {
                             Console.WriteLine("Wrong input");
                             break;
                         }
-
                         if (FindContainerBySerialNumber(sernum) is IProductTypeContainer productTypeContainer)
                         {
                             Console.WriteLine("Enter the type of product you want to upload:");
@@ -228,17 +179,14 @@ class Program {
                             if (!productTypeContainer.CanLoadProductType(productType))
                             {
                                 Console.WriteLine(
-                                    "This container can only store " + productTypeContainer.TypeName + ".");
+                                    "This container can only store " + productTypeContainer+ ".");
                                 break;
                             }
-
-                            FindContainerBySerialNumber(sernum).loadingCargo(mass);
+                            FindContainerBySerialNumber(sernum).LoadingCargo(mass);
                         }
-                        else FindContainerBySerialNumber(sernum).loadingCargo(mass);
-
+                        else FindContainerBySerialNumber(sernum).LoadingCargo(mass);
                         break;
                     }
-
                 case 4:
                     Console.WriteLine("Do you want to get info about all containers (1) or special one(2)");
                     int concase4 = Convert.ToInt32(Console.ReadLine());
@@ -248,12 +196,9 @@ class Program {
                         {
                             Console.WriteLine(
                                 container.GetContainerInfo());
-
                         }
-
                         break;
                     }
-
                     else if (concase4 == 2)
                     {
                         Console.WriteLine("Write the serial number of container");
@@ -275,25 +220,20 @@ class Program {
                     double maxWeight = Convert.ToDouble(Console.ReadLine());
                     Ship ship = new Ship(maxSpeed, maxCons, maxWeight);
                     Ships.Add(ship);
-                    Console.WriteLine(ship.GetSernum());
+                    Console.WriteLine(ship.Sernum);
                     break;
-
-
                 case 6:
                     Console.WriteLine("Enter the serial number of ship");
                     string sernumShip = Convert.ToString(Console.ReadLine());
                     Console.WriteLine(FindShipBySerialNumber(sernumShip).GetShipInfo());
                     break;
-
                 case 7:
                     Console.WriteLine("Enter the serial number of container");
                     string sernumCon = Convert.ToString(Console.ReadLine());
                     Console.WriteLine("Enter the serial number of ship");
                     string sernumShip2 = Convert.ToString(Console.ReadLine());
-                    FindShipBySerialNumber(sernumShip2).addContainer(FindContainerBySerialNumber(sernumCon));
-
+                    FindShipBySerialNumber(sernumShip2).AddContainer(FindContainerBySerialNumber(sernumCon));
                     break;
-
                 case 8:
                     Console.WriteLine(
                         "Enter the list of serial number of container in this format: number1,number2,...numbern");
@@ -303,39 +243,88 @@ class Program {
                     string sernumShip3 = Convert.ToString(Console.ReadLine());
                     foreach (string serNum in serNums)
                     {
-                        FindShipBySerialNumber(sernumShip3).addContainer(FindContainerBySerialNumber(serNum));
+                        FindShipBySerialNumber(sernumShip3).AddContainer(FindContainerBySerialNumber(serNum));
                     }
-
                     break;
-
                 case 9:
                     Console.WriteLine("Enter serial number of the container");
                     string sernum9 = Convert.ToString(Console.ReadLine());
-                    FindShipByContainerSerialNumber(sernum9).removeContainer(FindContainerBySerialNumber(sernum9));
+                    FindShipByContainerSerialNumber(sernum9).RemoveContainer(FindContainerBySerialNumber(sernum9));
                     break;
-                
                 case 10:
                     Console.WriteLine("Enter serial number of the container which you want to sub off: ");
                     string sernum101 = Convert.ToString(Console.ReadLine());
                     Console.WriteLine("Enter serial number of the container which you want to sub in: ");
                     string sernum102 = Convert.ToString(Console.ReadLine());
                     Ship a = FindShipByContainerSerialNumber(sernum101);
-                    a.removeContainer(FindContainerBySerialNumber(sernum101));
-                    a.addContainer(FindContainerBySerialNumber(sernum102));
+                    a.RemoveContainer(FindContainerBySerialNumber(sernum101));
+                    a.AddContainer(FindContainerBySerialNumber(sernum102));
                     break;
-                
                 case 11:
                     Console.WriteLine("Enter serial number of the container: ");
                     string sernum11 = Convert.ToString(Console.ReadLine());
                     Console.WriteLine("Enter serial number of the ship you want transfer this container to: ");
                     string sernumship11 = Convert.ToString(Console.ReadLine());
                     Ship b = FindShipByContainerSerialNumber(sernum11);
-                    b.removeContainer(FindContainerBySerialNumber(sernum11));
-                    FindShipBySerialNumber(sernumship11).addContainer(FindContainerBySerialNumber(sernum11));
+                    b.RemoveContainer(FindContainerBySerialNumber(sernum11));
+                    FindShipBySerialNumber(sernumship11).AddContainer(FindContainerBySerialNumber(sernum11));
+                    break;
+                case 12:
+                    ConCountPerType();
                     break;
                 default: break;
             }
-
         }
-    }
+    }  
+         private static void AddLiquidContainer(LiquidContainer liquidContainer)
+         {
+             LiquidContainers.Add(liquidContainer);
+             Containers.Add(liquidContainer); // Also add to the general list of containers
+         }
+         private static void AddGasContainer(GasContainer gasContainer)
+         {
+             GasContainers.Add(gasContainer);
+             Containers.Add(gasContainer); // Also add to the general list of containers
+         }
+         private static void AddrRefrigeratedContainer(RefrigeratedContainer refrigeratedContainer)
+         {
+             RefrigeratedContainers.Add(refrigeratedContainer);
+             Containers.Add(refrigeratedContainer); // Also add to the general list of containers
+         }
+         public interface IHazardNotifier
+         {
+             void NotifyHazard(string containerNumber);
+         }
+         private static Ship FindShipByContainerSerialNumber(string containerSerialNumber)
+         {
+             foreach (var ship in Ships)
+             {
+                 if (ship.GetContainer().Any(c => c.SerNum == containerSerialNumber))
+                 {
+                     return ship;
+                 }
+             }
+             return null;
+         }
+         private static void ConCountPerType()
+         {
+             var g = 0;
+             foreach (GasContainer gasContainer in GasContainers)
+             {
+                 g++;
+             }
+             int l = 0;
+             foreach (LiquidContainer liquidContainer in LiquidContainers)
+             {
+                 l++;
+             }
+             int r = 0;
+             foreach (RefrigeratedContainer refrigeratedContainer in RefrigeratedContainers)
+             {
+                 r++;
+             }
+             Console.WriteLine($"The count of Gas Containers: {g}");
+             Console.WriteLine($"The count of Liquid Containers: {l}");
+             Console.WriteLine($"The count of Refrigerated Containers: {r}");
+         }
 }

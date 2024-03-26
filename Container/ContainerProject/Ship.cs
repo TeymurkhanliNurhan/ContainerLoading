@@ -1,64 +1,49 @@
 namespace ContainerProject;
-
-public class Ship
+public class Ship(double maxSpeed, int conNumber, double maxWeight)
 {
-    private List<Container> containers=new List<Container>(); 
-    public List<Container> getContainer() { return containers;}
-    
-    private double maxSpeed;
-    private int conNumber;
-    private double maxWeight;
-    private static int contNum=1;
-    private string sernum;
+    private List<Container> containers = new List<Container>();
+    private double maxSpeed = maxSpeed;
+    private int conNumber = conNumber;
+    private double maxWeight = maxWeight;
+    private static int contNum = 1;
+    private string sernum = GenerateSerialNumber();
     private double currentWeight = 0;
     private double currentCons = 0;
-
-    public Ship(double maxSpeed, int conNumber, double maxWeight)
+    private static string GenerateSerialNumber()
     {
-        this.maxSpeed = maxSpeed;
-        this.conNumber = conNumber;
-        this.maxWeight = maxWeight;
-        this.sernum = GenerateSerialNumber();
-    }
-
-    private string GenerateSerialNumber()
-    {
-        string serialNumber = $"ship{contNum}";
-        contNum++; 
+        var serialNumber = $"ship{contNum}";
+        contNum++;
         return serialNumber;
     }
-
-    public void addContainer(Container container)
+    public void AddContainer(Container container)
     {
-        if ((container.getMaxPayload()+container.getTareWeight())/1000>maxWeight)
+        if ((container.MaxPayload + container.TareWeight) / 1000 > maxWeight)
         {
-            Console.WriteLine("This container can not be add to this ship, because it exceeds the maximum Payload mass");
+            Console.WriteLine(
+                "This container can not be add to this ship, because it exceeds the maximum Payload mass");
         }
-        else if ((currentCons+1)>conNumber)
+        else if ((currentCons + 1) > conNumber)
         {
             Console.WriteLine("This container can not be added to this ship, because it exceeds the container limit");
         }
         else
         {
-            currentWeight += container.getMaxPayload()/1000;
+            currentWeight += container.MaxPayload / 1000;
             containers.Add(container);
             this.currentCons++;
         }
     }
-
-    public void removeContainer(Container container)
+    public void RemoveContainer(Container container)
     {
-        currentWeight -= container.getMaxPayload()/1000;
+        currentWeight -= container.MaxPayload / 1000;
         containers.Remove(container);
         this.currentCons--;
     }
-    
-
     public virtual string GetShipInfo()
     {
         string info = "\n";
-        info += $"Serial Number: {GetSernum()}\n";
-        info += $"Max speed : {GetMaxSpeed()} knots \n";
+        info += $"Serial Number: {Sernum}\n";
+        info += $"Max speed : {MaxSpeed} knots \n";
         info += $"Maximum container number: {conNumber}\n";
         info += $"Current container number: {currentCons}\n";
         info += $"Maximum payload weight: {maxWeight} ton\n";
@@ -66,66 +51,23 @@ public class Ship
         info += "Containers: ";
         foreach (Container container in containers)
         {
-            info += container.getSerNum()+"|||";
-            
+            info += container.SerNum + "|||";
         }
         info += "\n";
         return info;
     }
-    
     //Getters and Setters
-    public double GetMaxSpeed()
-    {
-        return maxSpeed;
-    }
-    
-    public void SetMaxSpeed(double value)
-    {
-        maxSpeed = value;
-    }
+    public double MaxSpeed { get; set; }
 
-    public int GetConNumber()
+    public int ConNumber { get; set; }
+
+    public double MaxWeight { get; set; }
+    public string Sernum { get; set; }
+
+    public double CurrentWeight { get; set; }
+
+    public List<Container> GetContainer()
     {
-        return conNumber;
-    }
-    
-    public void SetConNumber(int value)
-    {
-        conNumber = value;
-    }
-    
-    public double GetMaxWeight()
-    {
-        return maxWeight;
-    }
-    
-    public void SetMaxWeight(double value)
-    {
-        maxWeight = value;
-    }
-    
-    public static int GetContNum()
-    {
-        return contNum;
-    }
-    
-    public string GetSernum()
-    {
-        return sernum;
-    }
-    
-    public void SetSernum(string value)
-    {
-        sernum = value;
-    }
-    
-    public double GetCurrentWeight()
-    {
-        return currentWeight;
-    }
-    
-    public void SetCurrentWeight(double value)
-    {
-        currentWeight = value;
+        return containers;
     }
 }
