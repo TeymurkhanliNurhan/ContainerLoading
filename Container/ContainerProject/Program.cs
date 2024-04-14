@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using System.Threading.Channels;
 using ContainerProject;
  
@@ -155,11 +156,11 @@ class Program {
                     }
                     else if (ConType == 3)
                     {
-                        Console.WriteLine("Enter the type of product");
+                      /*  Console.WriteLine("Enter the type of product");
                         Console.WriteLine(
                             "Types: Bananas/ Chocolate/ Fish/ Meat/ Ice cream/ Frozen pizza/ Cheese/ Sausage/ Butter/ Eggs ");
-                        var type = Convert.ToString(Console.ReadLine());
-                        var refrigeratedContainer = new RefrigeratedContainer(height, tareWeight, depth, maxPayLoad, type);
+                        var type = Convert.ToString(Console.ReadLine());*/
+                        var refrigeratedContainer = new RefrigeratedContainer(height, tareWeight, depth, maxPayLoad);
                         AddrRefrigeratedContainer(refrigeratedContainer);
                         break;
                     }
@@ -179,9 +180,8 @@ class Program {
                     }
                     else
                     {
-                        foreach (var gasContainer in GasContainers)
-                        {
-                            if (FindContainerBySerialNumber(sernum1)==gasContainer)
+                     
+                            if (FindContainerBySerialNumber(sernum1) is GasContainer gasContainer)
                             {
                                 FindContainerBySerialNumber(sernum1).emptyingCargo(0);
                                 break;
@@ -197,7 +197,6 @@ class Program {
                                 else FindContainerBySerialNumber(sernum1).emptyingCargo(emptyCargo);
                                 break;
                             }
-                        }
                     }
                     break;
                 case 3:
@@ -217,7 +216,7 @@ class Program {
                             Console.WriteLine("Wrong input");
                             break;
                         }
-                        if (FindContainerBySerialNumber(sernum) is IProductTypeContainer productTypeContainer)
+                       /* if (FindContainerBySerialNumber(sernum) is IProductTypeContainer productTypeContainer)
                         {
                             Console.WriteLine("Enter the type of product you want to upload:");
                             var productType = Console.ReadLine();
@@ -228,8 +227,35 @@ class Program {
                                 break;
                             }
                             FindContainerBySerialNumber(sernum).loadingCargo(mass);
-                        }
-                        else FindContainerBySerialNumber(sernum).loadingCargo(mass);
+                        }*/
+                       if (FindContainerBySerialNumber(sernum) is RefrigeratedContainer refrigeratedContainer)
+                       {
+                           Console.WriteLine("Enter the type of product");
+                           Console.WriteLine(
+                               "Types: Bananas/ Chocolate/ Fish/ Meat/ Ice cream/ Frozen pizza/ Cheese/ Sausage/ Butter/ Eggs ");
+                           var type = Convert.ToString(Console.ReadLine());
+                           if (FindContainerBySerialNumber(sernum).getMass()==0)
+                           {
+                               FindContainerBySerialNumber(sernum).setType(type);
+                               FindContainerBySerialNumber(sernum).loadingCargo(mass);
+                               break;
+                           }
+                           else
+                           {
+                              if (FindContainerBySerialNumber(sernum).getType() != type)
+                               {
+                                   Console.WriteLine("This container is loaded with other type!");
+                                   break;
+                               }
+                              else
+                              {
+                                  FindContainerBySerialNumber(sernum).loadingCargo(mass);
+                                  break;
+                              }
+                           }
+
+                       }
+                        //else FindContainerBySerialNumber(sernum).loadingCargo(mass);
                         break;
                     }
                 case 4:

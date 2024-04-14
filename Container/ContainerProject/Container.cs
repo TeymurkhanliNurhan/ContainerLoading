@@ -8,6 +8,7 @@ public class Container
     private String sernum;
     private Double maxPayload;
     private static int contNum = 1;
+    private String type;
     public Container(double height,double tareWeight,double depth,double maxPayload)
     {
         this.height = height;
@@ -103,8 +104,18 @@ public class Container
     {
         return maxPayload;
     }
+
     public void setMaxPayload(double maxPayload)
     {
         this.maxPayload = maxPayload;
     }
+
+    public void setType(string type)
+        {
+            this.type = type;
+        }
+        public String getType()
+        {
+            return type;
+        }
 }

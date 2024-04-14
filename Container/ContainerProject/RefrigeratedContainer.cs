@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 
 namespace ContainerProject;
 
@@ -8,12 +9,13 @@ public class RefrigeratedContainer : Container, IProductTypeContainer
 {
     public string TypeName { get; private set; }
     private double temperature;
+    private string type;
     
-    public RefrigeratedContainer(double height, double tareWeight, double depth, double maxPayload,string typeProduct) :
+    public RefrigeratedContainer(double height, double tareWeight, double depth, double maxPayload) :
         base(height, tareWeight, depth, maxPayload)
     {
-        this.TypeName = typeProduct;
-        switch (this.TypeName)
+        //this.TypeName = typeProduct;
+       /* switch (this.TypeName)
         {
             case "Bananas": temperature = 13.3;
                 break;
@@ -37,7 +39,14 @@ public class RefrigeratedContainer : Container, IProductTypeContainer
                 break;
             default: Console.WriteLine("Not a correct type");
                 break;
-        }
+        }*/
+    }
+    public override string GetContainerInfo()
+    {
+        string info = base.GetContainerInfo();
+        info += $"Type: Refrigerated Container\n";
+        info += $"Load type: {getType()}\n";
+        return info;
     }
     public bool CanLoadProductType(string productType)
     {
@@ -47,4 +56,5 @@ public class RefrigeratedContainer : Container, IProductTypeContainer
     {
         return "C";
     }
+ 
 }
