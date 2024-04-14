@@ -224,7 +224,7 @@ class Program {
                             if (!productTypeContainer.CanLoadProductType(productType))
                             {
                                 Console.WriteLine(
-                                    "This container can only store " + productTypeContainer.TypeName + ".");
+                                    "This container can only store " + productTypeContainer.GetType() + ".");
                                 break;
                             }
                             FindContainerBySerialNumber(sernum).loadingCargo(mass);
