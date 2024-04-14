@@ -39,19 +39,12 @@ public class RefrigeratedContainer : Container, IProductTypeContainer
                 break;
         }
     }
-
     public bool CanLoadProductType(string productType)
     {
         return productType.Equals(TypeName, StringComparison.OrdinalIgnoreCase);
     }
-  
-    
-
     protected override string GetType()
     {
         return "C";
     }
-
-    
-
 }

@@ -15,26 +15,19 @@ public class GasContainer : Container, IHazardNotifier
         info += $"Type: Gas Container\n";
         info += $"Pressure: {pressure} atm\n";
         info += $"\n";
-
-        // Add any other specific information for LiquidContainer
         return info;
     }
-    
-    
     public void NotifyHazard(string containerNumber)
     {
         Console.WriteLine($"Hazardous situation detected in container {containerNumber}. Immediate action required.");
     }
-
     public override void emptyingCargo(double emptyweight)
     {
-        double minLevel = 0.05 * getMaxPayload();
-        if (getMass() - emptyweight < minLevel) NotifyHazard(getSerNum());
-        else setMass(getMass()-emptyweight);
-
-
+        if(getMass()<0.05*getMaxPayload())
+            NotifyHazard(getSerNum());
+        else
+            setMass(0.05*getMaxPayload());
     }
-
     protected override string GetType()
     {
         return "G";

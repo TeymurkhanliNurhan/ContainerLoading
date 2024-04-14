@@ -4,7 +4,6 @@ public class Ship
 {
     private List<Container> containers=new List<Container>(); 
     public List<Container> getContainer() { return containers;}
-    
     private double maxSpeed;
     private int conNumber;
     private double maxWeight;
@@ -12,7 +11,6 @@ public class Ship
     private string sernum;
     private double currentWeight = 0;
     private double currentCons = 0;
-
     public Ship(double maxSpeed, int conNumber, double maxWeight)
     {
         this.maxSpeed = maxSpeed;
@@ -20,14 +18,12 @@ public class Ship
         this.maxWeight = maxWeight;
         this.sernum = GenerateSerialNumber();
     }
-
     private string GenerateSerialNumber()
     {
-        string serialNumber = $"ship{contNum}";
+        var serialNumber = $"ship{contNum}";
         contNum++; 
         return serialNumber;
     }
-
     public void addContainer(Container container)
     {
         if ((container.getMaxPayload()+container.getTareWeight())/1000>maxWeight)
@@ -45,15 +41,12 @@ public class Ship
             this.currentCons++;
         }
     }
-
     public void removeContainer(Container container)
     {
         currentWeight -= container.getMaxPayload()/1000;
         containers.Remove(container);
         this.currentCons--;
     }
-    
-
     public virtual string GetShipInfo()
     {
         string info = "\n";
@@ -78,52 +71,42 @@ public class Ship
     {
         return maxSpeed;
     }
-    
     public void SetMaxSpeed(double value)
     {
         maxSpeed = value;
     }
-
     public int GetConNumber()
     {
         return conNumber;
     }
-    
     public void SetConNumber(int value)
     {
         conNumber = value;
     }
-    
     public double GetMaxWeight()
     {
         return maxWeight;
     }
-    
     public void SetMaxWeight(double value)
     {
         maxWeight = value;
     }
-    
     public static int GetContNum()
     {
         return contNum;
     }
-    
     public string GetSernum()
     {
         return sernum;
     }
-    
     public void SetSernum(string value)
     {
         sernum = value;
     }
-    
     public double GetCurrentWeight()
     {
         return currentWeight;
     }
-    
     public void SetCurrentWeight(double value)
     {
         currentWeight = value;
